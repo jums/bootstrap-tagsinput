@@ -341,7 +341,10 @@
             return (text.toLowerCase().indexOf(this.query.trim().toLowerCase()) !== -1);
           },
           sorter: function (texts) {
-            return texts.sort();
+            if (!!typeahead.sorter)
+              return texts.sort(typeahead.sorter);
+            else
+              return texts.sort();
           },
           highlighter: function (text) {
             var regex = new RegExp( '(' + this.query + ')', 'gi' );
