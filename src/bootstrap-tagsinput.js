@@ -28,7 +28,8 @@
     },
     trimValue: false,
     allowDuplicates: false,
-    triggerChange: true
+    triggerChange: true,
+    bloodhound: false // Is typeahead source bloodhound
   };
 
   /**
@@ -311,8 +312,14 @@
             }
 
             this.map = {};
-            var map = this.map,
-                data = typeahead.source(query);
+            var map = this.map;
+
+            if (options.bloodhound) {
+                typeahead.source().search(query, processItems, processItems);
+                return;
+            }
+
+            var data = typeahead.source(query);
 
             if ($.isFunction(data.success)) {
               // support for Angular callbacks
